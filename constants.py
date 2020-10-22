@@ -1,0 +1,6 @@
+# API Query Limits
+PLAYLIST_SONG_LIMIT = 2000
+PLAYLIST_LIMIT = 50
+
+# Strings
+LIKED_SONGS = "Liked Songs:\n"
