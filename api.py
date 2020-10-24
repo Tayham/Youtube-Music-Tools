@@ -1,8 +1,10 @@
+from music_objects import Playlist, Track
 from typing import Dict, List
 
 from ytmusicapi import YTMusic
 
 import constants
+from constants import LikeStatuses
 
 
 class YoutubeMusicApiSingleton:
@@ -31,10 +33,16 @@ class YoutubeMusicApiSingleton:
             if item_to_find(item):
                 return item
 
-    def get_library_playlist_by_title(self, title: str) -> dict:
+    def get_library_playlist_by_title(self, title: str) -> Playlist:
         library_playlists = self.__youtube_music_api.get_library_playlists(
             constants.PLAYLIST_LIMIT)
         matching_library_playlist = self.__find(
             lambda playlists: playlists["title"] == title, library_playlists)
-        return self.__youtube_music_api.get_playlist(
-            matching_library_playlist["playlistId"], constants.PLAYLIST_SONG_LIMIT)
+        return Playlist(self.__youtube_music_api.get_playlist(
+            matching_library_playlist["playlistId"], constants.PLAYLIST_SONG_LIMIT))
+
+    def add_track_to_library(self, track: Track) -> None:
+        """
+        Add at track to the current user's Youtube Music library
+        """
+        self.__youtube_music_api.rate_song(track.id, LikeStatuses.LIKE.value)
