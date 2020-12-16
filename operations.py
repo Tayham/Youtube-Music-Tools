@@ -1,23 +1,38 @@
-from typing import Dict, List
-from constants import LIKED_SONGS, LikeStatuses, PLAYLIST_FOUND
+from typing import Dict, List, Iterator
+from constants import *
 import api
+from consolemenu import *
 from api import YoutubeMusicApiSingleton
 import music_objects
-from music_objects import Track
+from music_objects import *
 
 youtube_music_api = YoutubeMusicApiSingleton()
 
-
-def add_liked_songs_in_playlist_to_library(playlist_title: str) -> None:
+def get_matching_songs_from_playlist(console: Screen, playlist_title: str, filter_function: FilterFunction) -> List[PlaylistTrack]:
     """
-    Add liked songs from a playlist to youtube music library
+    Return filter matched songs from a playlist
     """
     playlist = youtube_music_api.get_library_playlist_by_title(playlist_title)
-    print(PLAYLIST_FOUND + playlist.get_playlist_info())
-    liked_playlist_tracks = filter(lambda track: track.likeStatus == LikeStatuses.LIKE.value, playlist.tracks)
-    print(LIKED_SONGS)
-    for track in liked_playlist_tracks:
-        print(track.get_track_info())
+    console.println(PLAYLIST_FOUND + playlist.get_playlist_info())
 
-    #TODO add songs to library
+    filtered_playlist_tracks = list(filter(filter_function.function, playlist.tracks))
+    console.println(filter_function.printout)
+
+    # tracks_found_counter = 0
+    for track in filtered_playlist_tracks:
+        console.println(track.get_track_info())
+        console.println(track.setVideoId)
+        console.println(track['setVideoId'])
+        # tracks_found_counter += 1
+
+    console.println(FOUND_SONG_AMOUNTS.format(len(filtered_playlist_tracks)))
+    return filtered_playlist_tracks
+
+def remove_songs_from_playlist(console: Screen, playlist_title: str, tracks_to_remove: List[PlaylistTrack]) -> None:
+    """
+    Remove songs from a playlist
+    """
+    playlist = youtube_music_api.get_library_playlist_by_title(playlist_title)
+    console.println(PLAYLIST_FOUND + playlist.get_playlist_info())
+    youtube_music_api.remove_songs_from_playlist(playlist, tracks_to_remove)
     

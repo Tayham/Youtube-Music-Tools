@@ -1,5 +1,5 @@
-from music_objects import Playlist, Track
-from typing import Dict, List
+from music_objects import *
+from typing import *
 
 from ytmusicapi import YTMusic
 
@@ -43,6 +43,12 @@ class YoutubeMusicApiSingleton:
 
     def add_track_to_library(self, track: Track) -> None:
         """
-        Add at track to the current user's Youtube Music library
+        Add a track to the current user's Youtube Music library
         """
         self.__youtube_music_api.rate_song(track.id, LikeStatuses.LIKE.value)
+
+    def remove_songs_from_playlist(self, playlist: Playlist, tracks: List[PlaylistTrack]) -> None:
+        """
+        Remove a track from a playlist in Youtube Music
+        """
+        self.__youtube_music_api.remove_playlist_items(playlist.id, tracks)
