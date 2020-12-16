@@ -30,7 +30,7 @@ class FilterFunction:
         self.printout = printout
         self.function = function
 
-LIKED_SONGS_FILTER = FilterFunction("Liked Songs:\n", lambda track: track.likeStatus == LikeStatuses.LIKE.value)
+LIKED_SONGS_FILTER = FilterFunction("Liked Songs:\n", lambda track: track['likeStatus'] == LikeStatuses.LIKE.value)
 
 class LikeStatuses(Enum):
     LIKE = "LIKE"
