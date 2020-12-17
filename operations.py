@@ -3,8 +3,6 @@ from constants import *
 import api
 from consolemenu import *
 from api import YoutubeMusicApiSingleton
-import music_objects
-from music_objects import *
 
 youtube_music_api = YoutubeMusicApiSingleton()
 
@@ -21,8 +19,6 @@ def _get_track_info(track: Dict) -> str:
     artists = ', '.join([artist['name'] for artist in track['artists']])
     return(f"Title: {track['title']}\nArtist(s): {artists}\nAlbum: {track['album']['name']}\nLiked: {track['likeStatus']}\n")
 
-
-
 def get_matching_songs_from_playlist(console: Screen, playlist_title: str, filter_function: FilterFunction) -> List[Dict]:
     """
     Return filter matched songs from a playlist
@@ -33,8 +29,8 @@ def get_matching_songs_from_playlist(console: Screen, playlist_title: str, filte
     filtered_playlist_tracks = list(filter(filter_function.function, playlist['tracks']))
     console.println(filter_function.printout)
 
-    for track in filtered_playlist_tracks:
-        console.println(_get_track_info(track))
+    # for track in filtered_playlist_tracks:
+        # console.println(_get_track_info(track))
 
     console.println(FOUND_SONG_AMOUNTS.format(len(filtered_playlist_tracks)))
     return filtered_playlist_tracks
