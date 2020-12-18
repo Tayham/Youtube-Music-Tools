@@ -2,11 +2,8 @@ from consolemenu import *
 from consolemenu.items import *
 from consolemenu.prompt_utils import PromptUtils
 from ytmusicapi.parsers import playlists
-
 from constants import *
 from operations import *
-
-
 
 def remove_liked_songs_from_playlist_selection() -> None:
     screen = Screen()

@@ -25,13 +25,8 @@ def get_matching_songs_from_playlist(console: Screen, playlist_title: str, filte
     """
     playlist = youtube_music_api.get_library_playlist_by_title(playlist_title)
     console.println(PLAYLIST_FOUND + _get_playlist_info(playlist))
-
     filtered_playlist_tracks = list(filter(filter_function.function, playlist['tracks']))
     console.println(filter_function.printout)
-
-    # for track in filtered_playlist_tracks:
-        # console.println(_get_track_info(track))
-
     console.println(FOUND_SONG_AMOUNTS.format(len(filtered_playlist_tracks)))
     return filtered_playlist_tracks
 
