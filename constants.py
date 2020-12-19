@@ -3,6 +3,8 @@ from enum import Enum
 # API Query Limits
 PLAYLIST_SONG_LIMIT = 2000
 PLAYLIST_LIMIT = 50
+UPLOAD_SONG_LIMIT = 50
+SEARCH_SONG_LIMIT = 10
 
 # Strings
 
@@ -20,6 +22,7 @@ REMOVE_LIKED_SONGS_PROMPT = "Proceed with removing these songs from the playlist
 # Print Outs
 PLAYLIST_FOUND = "Playlist Found!:\n"
 FOUND_SONG_AMOUNTS = "Found {0} Songs in Total\n"
+SONG_SEARCH_START = "Searching for {0}"
 
 #Filter Functions
 class FilterFunction:
@@ -30,9 +33,22 @@ class FilterFunction:
         self.printout = printout
         self.function = function
 
-LIKED_SONGS_FILTER = FilterFunction("Liked Songs:\n", lambda track: track['likeStatus'] == LikeStatuses.LIKE.value)
+LIKED_SONGS_FILTER = FilterFunction("Liked Songs:\n", lambda song: song['likeStatus'] == LikeStatuses.LIKE.value)
 
 class LikeStatuses(Enum):
     LIKE = "LIKE"
     NEUTRAL = "INDIFFERENT"
     DISLIKE = "DISLIKE"
+
+class Order(Enum):
+    DSC = "a_to_z"
+    ASC = "z_to_a"
+    RECENT = "recently_added"
+
+class ItemType(Enum):
+    SONG = "songs"
+    VIDEO = "videos"
+    ALBUM = "albums"
+    ARTIST = "artists"
+    PLAYLIST = "playlists"
+    UPLOAD = "uploads"
