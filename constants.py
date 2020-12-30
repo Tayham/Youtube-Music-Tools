@@ -3,8 +3,8 @@ from enum import Enum
 # API Query Limits
 PLAYLIST_SONG_LIMIT = 2000
 PLAYLIST_LIMIT = 50
-UPLOAD_SONG_LIMIT = 50
-SEARCH_SONG_LIMIT = 10
+UPLOAD_SONG_LIMIT = 25
+SEARCH_SONG_LIMIT = 5
 
 # Strings
 
@@ -13,7 +13,8 @@ MENU_TITLE = "Youtube Music Tools"
 MENU_SUBTITLE = "Please select an option below"
 
 # Menu Options
-REMOVE_LIKED_SONGS_FROM_PLAYLIST_OPTION ="Remove the Liked Songs from the Playlist"
+REMOVE_LIKED_SONGS_FROM_PLAYLIST_OPTION = "Remove the Liked Songs from the Playlist"
+REPLACE_UPLOADED_SONGS_WITH_STREAMING_VERSIONS = "Replace Uploaded Songs with Streaming Versions"
 
 # Prompts
 PLAYLIST_PROMPT = "Please type the name of the playlist: "
