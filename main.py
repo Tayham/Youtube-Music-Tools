@@ -25,9 +25,12 @@ def replace_uploaded_songs_with_streaming_versions() -> None:
 
     for uploaded_song in uploaded_songs:
         search_result_songs = perform_song_search(screen, uploaded_song)
-        for result in search_result_songs:
-            screen.println(result)
-        PromptUtils(screen).prompt_for_numbered_choice(get_song_display_list(search_result_songs), "Search Results", "Select song to compare: ")
+        PromptUtils(screen).enter_to_continue("Look at results")
+        PromptUtils(screen).prompt_for_numbered_choice(get_song_display_list(search_result_songs)[0:5], "Search Results", "Select song to compare: ")
+        # for result in search_result_songs:
+        #     # screen.println(result)
+        PromptUtils(screen).enter_to_continue()
+        
 
     PromptUtils(screen).enter_to_continue()
     screen.clear()
