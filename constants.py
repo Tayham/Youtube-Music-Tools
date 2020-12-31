@@ -11,6 +11,7 @@ SEARCH_SONG_LIMIT = 20
 # Menu Titles
 MENU_TITLE = "Youtube Music Tools"
 MENU_SUBTITLE = "Please select an option below"
+MENU_PROMPT = "Please choose an option, 'q' to quit: "
 
 # Menu Options
 REMOVE_LIKED_SONGS_FROM_PLAYLIST_OPTION = "Remove the Liked Songs from the Playlist"

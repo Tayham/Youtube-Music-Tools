@@ -61,5 +61,5 @@ def get_playlist_info(playlist: Dict) -> str:
     """
     Returns a nicely readable printout of the playlist's information
     """
-    return(f"Title: {playlist['title']}\nsong Count: {playlist['songCount']}\n")
+    return(f"Title: {playlist['title']}\nSong Count: {playlist['trackCount']}\n")
 
