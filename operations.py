@@ -30,15 +30,12 @@ def get_uploaded_songs(song_limit: int = UPLOAD_SONG_LIMIT, order: Order = Order
     """
     uploaded_songs = youtube_music_api.get_library_uploaded_songs(song_limit, order)
     print(FOUND_SONG_AMOUNTS.format(len(uploaded_songs)))
-    # for song in uploaded_songs:
-    #     print(get_song_info(song))
     return uploaded_songs
 
 def perform_song_search(song: Dict, song_search_limit: int = SEARCH_SONG_LIMIT, ignore_spelling: bool =True) -> List[Dict]:
     """
     Search for a given song and return a list of song results
     """
-    print(get_song_info(song))
     query = get_song_query(song)
     print(SONG_SEARCH_START.format(query))
     return youtube_music_api.perform_search(query, ItemType.SONG, song_search_limit, ignore_spelling)

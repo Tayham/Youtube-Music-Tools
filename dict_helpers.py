@@ -56,7 +56,7 @@ def get_song_display_list(songs: List[Dict]) -> List[str]:
     return song_display_list
 
 ### Playlist Helpers ###
-        
+
 def get_playlist_info(playlist: Dict) -> str:
     """
     Returns a nicely readable printout of the playlist's information
