@@ -1,5 +1,10 @@
 from typing import Dict, List, Iterator
 
+### Type Conversion Helpers ###
+
+def to_bool(value) -> bool:
+  return str(value).lower() in ("yes", "true", "t", "1")
+
 ### Song Helpers ###
 
 def _get_song_artists(song: Dict) -> str:

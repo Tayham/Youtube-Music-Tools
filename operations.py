@@ -7,6 +7,15 @@ from dict_helpers import get_song_info, get_song_query, get_playlist_info
 
 youtube_music_api = YoutubeMusicApiSingleton()
 
+def add_song_to_library(song: Dict) -> bool:
+    """
+    Add given song to library
+    True -> Song was successfully added to library
+    False -> Song was NOT added to library
+    """
+    print(ADD_LIBRARY_SONG + get_song_info(song))
+    return youtube_music_api.add_song_to_library(song)
+
 def get_playlist(title: str, playlist_limit: int = PLAYLIST_LIMIT, playlist_song_limit: int = PLAYLIST_SONG_LIMIT) -> Dict:
     """
     Returns a playlist that matches the title given
@@ -32,6 +41,13 @@ def get_uploaded_songs(song_limit: int = UPLOAD_SONG_LIMIT, order: Order = Order
     print(FOUND_SONG_AMOUNTS.format(len(uploaded_songs)))
     return uploaded_songs
 
+def delete_uploaded_song(uploaded_song_to_delete: Dict) -> None:
+    """
+    Delete given uploaded song
+    """
+    print(DELETE_UPLOAD_SONG + get_song_info(uploaded_song_to_delete))
+    youtube_music_api.delete_uploaded_song(uploaded_song_to_delete)
+
 def perform_song_search(song: Dict, song_search_limit: int = SEARCH_SONG_LIMIT, ignore_spelling: bool =True) -> List[Dict]:
     """
     Search for a given song and return a list of song results
@@ -44,6 +60,6 @@ def remove_songs_from_playlist(playlist_title: str, songs_to_remove: List[Dict])
     """
     Remove songs from a playlist
     """
-    playlist = get_playlist(playlist_title)
-    youtube_music_api.remove_songs_from_playlist(playlist['id'], songs_to_remove)
+    youtube_music_api.remove_songs_from_playlist(get_playlist(playlist_title), songs_to_remove)
+
     

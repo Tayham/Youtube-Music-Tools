@@ -36,10 +36,18 @@ REPLACE_UPLOADED_SONGS_WITH_STREAMING_VERSIONS = "Replace Uploaded Songs with St
 PLAYLIST_PROMPT = "Please type the name of the playlist: "
 REMOVE_LIKED_SONGS_PROMPT = "Proceed with removing these songs from the playlist?"
 
+### Print Out Statements ###
+FAILURE = "FAILURE: "
+RETRY = "\nPlease Retry"
+
 ### Print Outs ###
 
-PLAYLIST_FOUND = "Playlist Found!:\n"
+ADD_LIBRARY_SONG = "Adding Song to Library:\n"
+FAILURE_ADD_LIBRARY_SONG_RETRY = f"{FAILURE}{ADD_LIBRARY_SONG}{RETRY}"
+DELETE_UPLOAD_SONG = "Deleting Uploaded Song:\n"
 FOUND_SONG_AMOUNTS = "Found {0} Songs in Total\n"
+PLAYLIST_FOUND = "Playlist Found!:\n"
+REMOVE_SONG = "Removing Song:\n"
 SONG_SEARCH_START = "Searching for: {0}"
 HORIZONTAL_RULE = "-"*30
 
