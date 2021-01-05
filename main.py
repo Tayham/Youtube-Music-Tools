@@ -1,15 +1,19 @@
 from ytmusicapi.parsers import playlists
 from constants import *
 from operations import *
-from dict_helpers import get_song_display_list
+from dict_helpers import get_song_display_list, get_playlist_display_list
 from menu_helpers import *
 
-def remove_liked_songs_from_playlist_selection() -> None:
-    playlist_title = input(PLAYLIST_PROMPT)
-    songs_to_remove = get_matching_songs_from_playlist(playlist_title, LIKED_SONGS_FILTER)
+def remove_rated_songs_from_playlist_selection() -> None:
+    playlists = get_library_playlists()
+    selected_index = list_index_selection_menu("Choose a Playlist:", get_playlist_display_list(playlists), MENU_PROMPT_QUIT, True, False)
+    selected_playlist = playlists[selected_index]
+    print(SELECTION_MADE + get_playlist_info(selected_playlist))
+    songs_to_remove = get_matching_songs_from_playlist(selected_playlist, LIKED_SONGS_FILTER)
+    songs_to_remove.extend(get_matching_songs_from_playlist(selected_playlist, DISLIKED_SONGS_FILTER))
 
-    if yes_or_no_prompt(REMOVE_LIKED_SONGS_PROMPT):
-        remove_songs_from_playlist(playlist_title, songs_to_remove)
+    if yes_or_no_prompt(REMOVE_RATED_SONGS_PROMPT):
+        remove_songs_from_playlist(selected_playlist, songs_to_remove)
 
     continue_prompt()
 
@@ -45,6 +49,6 @@ def replace_uploaded_songs_with_streaming_versions() -> None:
 while True:
     selection = main_menu()
     if selection == 1:
-        remove_liked_songs_from_playlist_selection()
+        remove_rated_songs_from_playlist_selection()
     if selection == 2:
         replace_uploaded_songs_with_streaming_versions()

@@ -28,20 +28,22 @@ MENU_SONG_COMPARE_PROMPT = f"{MENU_SONG_COMPARE_STATEMENT}{MENU_SKIP_STATEMENT}{
 
 ### Menu Options ###
 
-REMOVE_LIKED_SONGS_FROM_PLAYLIST_OPTION = "Remove the Liked Songs from the Playlist"
+REMOVE_RATED_SONGS_FROM_PLAYLIST_OPTION = "Remove the Rated (Like/Dislike) Songs from a Playlist"
 REPLACE_UPLOADED_SONGS_WITH_STREAMING_VERSIONS = "Replace Uploaded Songs with Streaming Versions"
 
 ### Prompts ###
 
 PLAYLIST_PROMPT = "Please type the name of the playlist: "
-REMOVE_LIKED_SONGS_PROMPT = "Proceed with removing these songs from the playlist?"
+REMOVE_RATED_SONGS_PROMPT = "Proceed with removing the rated songs from the playlist?"
 
 ### Print Out Statements ###
+
 FAILURE = "FAILURE: "
 RETRY = "\nPlease Retry"
 
 ### Print Outs ###
 
+SELECTION_MADE = "You have selected:\n"
 ADD_LIBRARY_SONG = "Adding Song to Library:\n"
 FAILURE_ADD_LIBRARY_SONG_RETRY = f"{FAILURE}{ADD_LIBRARY_SONG}{RETRY}"
 DELETE_UPLOAD_SONG = "Deleting Uploaded Song:\n"
@@ -62,6 +64,7 @@ class FilterFunction:
         self.function = function
 
 LIKED_SONGS_FILTER = FilterFunction("Liked Songs:\n", lambda song: song['likeStatus'] == LikeStatuses.LIKE.value)
+DISLIKED_SONGS_FILTER = FilterFunction("Disliked Songs:\n", lambda song: song['likeStatus'] == LikeStatuses.DISLIKE.value)
 
 ### Enums ###
 
