@@ -37,11 +37,13 @@ PLAYLIST_PROMPT = "Please type the name of the playlist: "
 REMOVE_LIKED_SONGS_PROMPT = "Proceed with removing these songs from the playlist?"
 
 ### Print Out Statements ###
+
 FAILURE = "FAILURE: "
 RETRY = "\nPlease Retry"
 
 ### Print Outs ###
 
+SELECTION_MADE = "You have selected:\n"
 ADD_LIBRARY_SONG = "Adding Song to Library:\n"
 FAILURE_ADD_LIBRARY_SONG_RETRY = f"{FAILURE}{ADD_LIBRARY_SONG}{RETRY}"
 DELETE_UPLOAD_SONG = "Deleting Uploaded Song:\n"

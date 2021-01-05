@@ -1,15 +1,18 @@
 from ytmusicapi.parsers import playlists
 from constants import *
 from operations import *
-from dict_helpers import get_song_display_list
+from dict_helpers import get_song_display_list, get_playlist_display_list
 from menu_helpers import *
 
 def remove_liked_songs_from_playlist_selection() -> None:
-    playlist_title = input(PLAYLIST_PROMPT)
-    songs_to_remove = get_matching_songs_from_playlist(playlist_title, LIKED_SONGS_FILTER)
+    playlists = get_library_playlists()
+    selected_index = list_index_selection_menu("Choose a Playlist:", get_playlist_display_list(playlists), MENU_PROMPT_QUIT, True, False)
+    selected_playlist = playlists[selected_index]
+    print(SELECTION_MADE + get_playlist_info(selected_playlist))
+    songs_to_remove = get_matching_songs_from_playlist(selected_playlist, LIKED_SONGS_FILTER)
 
     if yes_or_no_prompt(REMOVE_LIKED_SONGS_PROMPT):
-        remove_songs_from_playlist(playlist_title, songs_to_remove)
+        remove_songs_from_playlist(selected_playlist, songs_to_remove)
 
     continue_prompt()
 

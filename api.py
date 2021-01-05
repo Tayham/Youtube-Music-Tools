@@ -1,7 +1,7 @@
 from typing import *
 from ytmusicapi import YTMusic
 import constants
-from dict_helpers import to_bool
+from dict_helpers import to_bool, get_playlist_id
 from constants import LikeStatuses, Order, ItemType
 
 
@@ -52,10 +52,17 @@ class YoutubeMusicApiSingleton:
     def get_library_uploaded_songs(self, song_limit: int, order: Order) -> List[Dict]:
         return self.__youtube_music_api.get_library_upload_songs(song_limit, order.value)
 
+    def get_library_playlists(self, playlist_limit: int) -> List[Dict]:
+        """
+        Get all playlists that are in the current user's Youtube Music library
+        NOTE: THIS DOES NOT RETURN THE COMPLETE INFORMATION FOR EACH PLAYLIST
+        """
+        return self.__youtube_music_api.get_library_playlists(playlist_limit)
+
     def get_library_playlist_by_title(self, title: str, playlist_limit: int, playlist_song_limit: int) -> Dict:
         library_playlists = self.__youtube_music_api.get_library_playlists(playlist_limit)
-        matching_library_playlist = self.__find(lambda playlists: playlists["title"] == title, library_playlists)
-        return self.__youtube_music_api.get_playlist(matching_library_playlist["playlistId"], playlist_song_limit)
+        matching_library_playlist = self.__find(lambda playlists: playlists['title'] == title, library_playlists)
+        return self.__youtube_music_api.get_playlist(matching_library_playlist['playlistId'], playlist_song_limit)
 
     def like_song(self, song: Dict) -> None:
         self.__youtube_music_api.rate_song(song['videoId'], LikeStatuses.LIKE.value)
@@ -66,8 +73,14 @@ class YoutubeMusicApiSingleton:
         """
         return self.__youtube_music_api.search(query, item_type.value, song_search_limit, ignore_spelling)
 
+    def get_playlist_with_items(self, playlist: Dict) -> Dict:
+        """
+        Gets all the information about the given playlist
+        """
+        return self.__youtube_music_api.get_playlist(get_playlist_id(playlist))
+
     def remove_songs_from_playlist(self, playlist: Dict, songs: List[Dict]) -> None:
         """
         Remove a song from a playlist in Youtube Music
         """
-        self.__youtube_music_api.remove_playlist_items(playlist['id'], songs)
+        self.__youtube_music_api.remove_playlist_items(get_playlist_id(playlist), songs)
