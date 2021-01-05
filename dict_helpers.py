@@ -69,7 +69,7 @@ def _get_playlist_trackCount(playlist: Dict) -> str:
     # Simple Playlist
     elif 'count' in playlist:
         return playlist['count']
-    # Liked Music Playlist
+    # "Liked Music" Playlist
     else:
         return "Unknown"
 
