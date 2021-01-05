@@ -1,8 +1,9 @@
-from typing import *
+from typing import Dict, List
+
 from ytmusicapi import YTMusic
-import constants
-from dict_helpers import to_bool, get_playlist_id
-from constants import LikeStatuses, Order, ItemType
+from core.constants import ItemType, LikeStatuses, Order
+from helpers.data.playlist import get_playlist_id
+from helpers.data.util import to_bool
 
 
 class YoutubeMusicApiSingleton:
@@ -10,7 +11,7 @@ class YoutubeMusicApiSingleton:
 
     def __init__(self):
         """ Constructor."""
-        self.__youtube_music_api = YTMusic("headers_auth.json")
+        self.__youtube_music_api = YTMusic("core/auth/headers_auth.json")
         if YoutubeMusicApiSingleton.__instance__ is None:
             YoutubeMusicApiSingleton.__instance__ = self
         else:
@@ -67,7 +68,8 @@ class YoutubeMusicApiSingleton:
     def like_song(self, song: Dict) -> None:
         self.__youtube_music_api.rate_song(song['videoId'], LikeStatuses.LIKE.value)
 
-    def perform_search(self, query: str, item_type: ItemType, song_search_limit: int, ignore_spelling: bool) -> List[Dict]:
+    def perform_search(
+            self, query: str, item_type: ItemType, song_search_limit: int, ignore_spelling: bool) -> List[Dict]:
         """
         Search for an item in Youtube Music
         """
