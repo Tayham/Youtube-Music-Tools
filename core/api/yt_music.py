@@ -75,11 +75,11 @@ class YoutubeMusicApiSingleton:
         """
         return self.__youtube_music_api.search(query, item_type.value, song_search_limit, ignore_spelling)
 
-    def get_playlist_with_items(self, playlist: Dict) -> Dict:
+    def get_playlist_with_items(self, playlist: Dict, playlist_song_limit: int) -> Dict:
         """
         Gets all the information about the given playlist
         """
-        return self.__youtube_music_api.get_playlist(get_playlist_id(playlist))
+        return self.__youtube_music_api.get_playlist(get_playlist_id(playlist), playlist_song_limit)
 
     def remove_songs_from_playlist(self, playlist: Dict, songs: List[Dict]) -> None:
         """
