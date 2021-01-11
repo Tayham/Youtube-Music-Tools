@@ -26,12 +26,6 @@ class YoutubeMusicApiSingleton:
             YoutubeMusicApiSingleton()
         return YoutubeMusicApiSingleton.__instance__
 
-    def __find(self, item_to_find: str, search_list: List[Dict]) -> Dict:
-        """Returns first item in a list where itemToFind(item) == True."""
-        for item in search_list:
-            if item_to_find(item):
-                return item
-
     def add_song_to_library(self, song: Dict) -> bool:
         """
         Add a song to the current user's Youtube Music library
@@ -59,11 +53,6 @@ class YoutubeMusicApiSingleton:
         NOTE: THIS DOES NOT RETURN THE COMPLETE INFORMATION FOR EACH PLAYLIST
         """
         return self.__youtube_music_api.get_library_playlists(playlist_limit)
-
-    def get_library_playlist_by_title(self, title: str, playlist_limit: int, playlist_song_limit: int) -> Dict:
-        library_playlists = self.__youtube_music_api.get_library_playlists(playlist_limit)
-        matching_library_playlist = self.__find(lambda playlists: playlists['title'] == title, library_playlists)
-        return self.__youtube_music_api.get_playlist(matching_library_playlist['playlistId'], playlist_song_limit)
 
     def like_song(self, song: Dict) -> None:
         self.__youtube_music_api.rate_song(song['videoId'], LikeStatuses.LIKE.value)

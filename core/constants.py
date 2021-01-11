@@ -7,7 +7,7 @@ PLAYLIST_LIMIT = 50
 UPLOAD_SONG_LIMIT = 25
 SEARCH_SONG_LIMIT = 20
 
-## Menu Titles ###
+### Menu Titles ####
 
 MENU_TITLE = "Youtube Music Tools"
 MENU_SUBTITLE = "Please select an option below"
@@ -57,9 +57,7 @@ HORIZONTAL_RULE = "-"*30
 
 class FilterFunction:
     def __init__(self, printout: str, function: callable) -> None:
-        """
-        Initializes FilterFunction object
-        """
+        """Initializes FilterFunction object"""
         self.printout = printout
         self.function = function
 

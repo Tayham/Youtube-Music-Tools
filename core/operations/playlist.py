@@ -1,5 +1,7 @@
 from typing import Dict, List
 
+from ytmusicapi.parsers import library
+
 from core.api.yt_music import YoutubeMusicApiSingleton
 from core.constants import (FOUND_SONG_AMOUNTS, PLAYLIST_FOUND, PLAYLIST_LIMIT,
                             PLAYLIST_SONG_LIMIT, FilterFunction)
@@ -8,11 +10,13 @@ from helpers.data.playlist import get_playlist_info
 youtube_music_api = YoutubeMusicApiSingleton.get_instance()
 
 
-def get_playlist(title: str, playlist_limit: int = PLAYLIST_LIMIT, playlist_song_limit: int = PLAYLIST_SONG_LIMIT) -> Dict:
+def get_playlist_by_title(title: str, playlist_limit: int = PLAYLIST_LIMIT, playlist_song_limit: int = PLAYLIST_SONG_LIMIT) -> Dict:
     """
     Returns a playlist that matches the title given
     """
-    return youtube_music_api.get_library_playlist_by_title(title, playlist_limit, playlist_song_limit)
+    library_playlists = get_library_playlists(playlist_limit)
+    matching_library_playlist = next((playlist for playlist in library_playlists if playlist['title'] == title), None)
+    return youtube_music_api.get_playlist_with_items(matching_library_playlist, playlist_song_limit)
 
 
 def get_library_playlists(playlist_limit: int = PLAYLIST_LIMIT) -> List[Dict]:
@@ -26,7 +30,7 @@ def get_matching_songs_using_playlist_title(playlist_title: str, filter_function
     """
     Return filter matched songs from a playlist matching the given title
     """
-    playlist = get_playlist(playlist_title)
+    playlist = get_playlist_by_title(playlist_title)
     print(PLAYLIST_FOUND + get_playlist_info(playlist))
     filtered_playlist_songs = list(
         filter(filter_function.function, playlist['tracks']))
