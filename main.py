@@ -16,6 +16,7 @@ from helpers.display.prompts import continue_prompt, yes_or_no_prompt
 
 
 def remove_rated_songs_from_playlist_selection() -> None:
+    """Remove rated songs from one of the current user's library playlists"""
     playlists = get_library_playlists()
     selected_index = list_index_selection_menu(
         "Choose a Playlist:", get_playlist_display_list(playlists),
@@ -32,6 +33,7 @@ def remove_rated_songs_from_playlist_selection() -> None:
 
 
 def replace_uploaded_songs_with_streaming_versions() -> None:
+    """Replace uploaded library songs with the matching streaming version (if applicable)"""
     uploaded_songs = get_uploaded_songs()
 
     for uploaded_song in uploaded_songs:

@@ -63,3 +63,14 @@ def get_playlist_display_list(playlists: List[Dict]) -> List[str]:
     for playlist in playlists:
         playlist_display_list.append(get_playlist_info(playlist))
     return playlist_display_list
+
+def has_item_info(playlist: Dict) -> bool:
+    """Checks whether playlist is complete (has item information)
+
+    Args:
+        playlist (Dict): Playlist to check
+
+    Returns:
+        bool: True -> Playlist is complete | False -> Playlist is NOT complete
+    """
+    return 'tracks' in playlist
