@@ -1,13 +1,13 @@
 from typing import Dict, List
 
-from ytmusicapi.parsers import library
-
 from core.api.yt_music import YoutubeMusicApiSingleton
-from core.constants import (FOUND_SONG_AMOUNTS, PLAYLIST_FOUND, PLAYLIST_LIMIT,
-                            PLAYLIST_SONG_LIMIT, FilterFunction)
-from helpers.data.playlist import get_playlist_info, has_item_info
+from core.constants.api import (PLAYLIST_LIMIT, PLAYLIST_SONG_LIMIT,
+                                FilterFunction)
+from core.constants.printout import FOUND
+from helpers.data.playlist import has_item_info
 
 youtube_music_api = YoutubeMusicApiSingleton.get_instance()
+
 
 def _ensure_complete_playlist(playlist: Dict, playlist_song_limit: int = PLAYLIST_SONG_LIMIT) -> Dict:
     """Ensure that the playlist is complete (contains item information), if not the complete playlist will be retrieved
@@ -25,7 +25,9 @@ def _ensure_complete_playlist(playlist: Dict, playlist_song_limit: int = PLAYLIS
     else:
         return youtube_music_api.get_complete_playlist(playlist, playlist_song_limit)
 
-def get_playlist_by_title(playlist_title: str, playlist_limit: int = PLAYLIST_LIMIT, playlist_song_limit: int = PLAYLIST_SONG_LIMIT) -> Dict:
+
+def get_playlist_by_title(playlist_title: str, playlist_limit: int = PLAYLIST_LIMIT,
+                          playlist_song_limit: int = PLAYLIST_SONG_LIMIT) -> Dict:
     """Get a playlist from the user's library that matches the title given
 
     Args:
@@ -37,7 +39,8 @@ def get_playlist_by_title(playlist_title: str, playlist_limit: int = PLAYLIST_LI
         Dict: Complete playlist
     """
     library_playlists = get_library_playlists(playlist_limit)
-    matching_library_playlist = next((playlist for playlist in library_playlists if playlist['title'] == playlist_title), None)
+    matching_library_playlist = next(
+        (playlist for playlist in library_playlists if playlist['title'] == playlist_title), None)
     return youtube_music_api.get_complete_playlist(matching_library_playlist, playlist_song_limit)
 
 
@@ -53,7 +56,8 @@ def get_library_playlists(playlist_limit: int = PLAYLIST_LIMIT) -> List[Dict]:
     return youtube_music_api.get_simple_library_playlists(playlist_limit)
 
 
-def get_matching_songs_from_playlist(playlist: Dict, filter_function: FilterFunction, playlist_song_limit: int = PLAYLIST_SONG_LIMIT) -> List[Dict]:
+def get_matching_songs_from_playlist(playlist: Dict, filter_function: FilterFunction,
+                                     playlist_song_limit: int = PLAYLIST_SONG_LIMIT) -> List[Dict]:
     """Get list of songs from a playlist that match the given filter
 
     Args:
@@ -65,10 +69,9 @@ def get_matching_songs_from_playlist(playlist: Dict, filter_function: FilterFunc
         List[Dict]: List of songs
     """
     complete_playlist = _ensure_complete_playlist(playlist, playlist_song_limit)
-    filtered_playlist_songs = list(
-        filter(filter_function.function, complete_playlist['tracks']))
+    filtered_playlist_songs = list(filter(filter_function.function, complete_playlist['tracks']))
     print(filter_function.printout)
-    print(FOUND_SONG_AMOUNTS.format(len(filtered_playlist_songs)))
+    print(FOUND + str(len(filtered_playlist_songs)))
     return filtered_playlist_songs
 
 

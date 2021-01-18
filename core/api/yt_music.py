@@ -1,9 +1,9 @@
 from typing import Dict, List
 
-from ytmusicapi import YTMusic
-from core.constants import ItemType, LikeStatuses, Order
+from core.constants.api import ItemType, LikeStatuses, Order
 from helpers.data.playlist import get_playlist_id
 from helpers.data.util import to_bool
+from ytmusicapi import YTMusic
 
 
 class YoutubeMusicApiSingleton:
@@ -84,7 +84,8 @@ class YoutubeMusicApiSingleton:
         """
         self.__youtube_music_api.rate_song(song['videoId'], LikeStatuses.LIKE.value)
 
-    def perform_search(self, query: str, item_type: ItemType, item_search_limit: int, ignore_spelling: bool) -> List[Dict]:
+    def perform_search(
+            self, query: str, item_type: ItemType, item_search_limit: int, ignore_spelling: bool) -> List[Dict]:
         """Search for an item in Youtube Music
 
         Args:
