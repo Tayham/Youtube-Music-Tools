@@ -1,4 +1,4 @@
-from core.constants.api import DISLIKED_SONGS_FILTER, LIKED_SONGS_FILTER, RATED_SONGS_FILTER
+from core.constants.api import RATED_SONGS_FILTER
 from core.constants.menu import (MENU_SONG_COMPARE_PROMPT,
                                  PLAYLIST_CHOICE_TITLE, SEARCH_RESULT_TITLE,
                                  SELECTION_MADE_TITLE)
@@ -67,6 +67,15 @@ def replace_uploaded_songs_with_streaming_versions() -> None:
                         print(FAILURE + ADDING + LIBRARY + SONG + get_song_info(selected_streaming_song) + RETRY)
 
     continue_prompt(NEXT_SONG_PROMPT, clear_screen=True)
+
+
+def replace_uploaded_albums_with_streaming_versions() -> None:
+    # Search for album
+    # User selects matching album
+    # Try to match auto match by using song numbers
+    # If not try to match manually
+    # User double check and if confirmed then add streaming to library and delete uploaded.
+    return
 
 
 while True:
