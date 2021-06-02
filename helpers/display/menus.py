@@ -24,15 +24,15 @@ def main_menu() -> int:
 
 
 def list_index_selection_menu(
-        title: str, choices: List[str],
+        title: str, choices: List[dict],
         prompt: str = MENU_CHOOSE_PROMPT, allow_quit: bool = False,
         allow_skip: bool = False) -> int:
     """Displays a menu that returns the index of the user selection.
 
     Args:
         title (str): Menu title text
-        choices (List[str]): Choices to display to the user
-        prompt (str, optional): Optional user promt text. Defaults to MENU_CHOOSE.
+        choices (List[dict]): Choices to display to the user
+        prompt (str, optional): Optional user prompt text. Defaults to MENU_CHOOSE.
         allow_quit (bool, optional): Set to True to allow user to enter 'q' to quit application. Defaults to False.
         allow_skip (bool, optional): Set to True to allow user to enter 0 to as a "Skip" option. Defaults to False.
 
@@ -40,7 +40,7 @@ def list_index_selection_menu(
         int: List index of the user selection
     """
     prompt_with_menu_options = _get_prompt_with_menu_options(prompt, allow_quit, allow_skip)
-    selection_index = menu3.Menu(allow_quit).menu(title=title, choices=choices, prompt=prompt_with_menu_options) - 1
+    selection_index = menu3.Menu(allow_quit).menu(title=title, choices=[str(choice) for choice in choices], prompt=prompt_with_menu_options) - 1
     # If given 0 and allow skip is not selected then redisplay the menu
     if selection_index == -1 and not allow_skip:
         return list_index_selection_menu(title, choices, prompt_with_menu_options, allow_quit, allow_skip)
