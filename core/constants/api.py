@@ -12,8 +12,9 @@ SEARCH_SONG_LIMIT = 20
 
 class LikeStatuses(Enum):
     LIKE = "LIKE"
-    NEUTRAL = "INDIFFERENT"
+    INDIFFERENT = "INDIFFERENT"
     DISLIKE = "DISLIKE"
+    UNKNOWN = "UNKNOWN"
 
 
 class Order(Enum):
@@ -40,8 +41,8 @@ class FilterFunction:
         self.function = function
 
 
-LIKED_SONGS_FILTER = FilterFunction("Liked Songs:\n", lambda song: song['likeStatus'] == LikeStatuses.LIKE.value)
+LIKED_SONGS_FILTER = FilterFunction("Liked Songs:\n", lambda song: song.like_status == LikeStatuses.LIKE)
 DISLIKED_SONGS_FILTER = FilterFunction(
-    "Disliked Songs:\n", lambda song: song['likeStatus'] == LikeStatuses.DISLIKE.value)
+    "Disliked Songs:\n", lambda song: song.like_status == LikeStatuses.DISLIKE)
 RATED_SONGS_FILTER = FilterFunction("Rated Songs:\n", lambda song: (
-    (song['likeStatus'] == LikeStatuses.LIKE.value) or (song['likeStatus'] == LikeStatuses.DISLIKE.value)))
+    (song.like_status == LikeStatuses.LIKE) or (song.like_status == LikeStatuses.DISLIKE)))
