@@ -155,8 +155,8 @@ class YoutubeMusicApiSingleton:
                 artists=[artist['name'] for artist in song_dict['artists']],
                 album=song_dict['album']['name'],
                 explicit=to_bool(song_dict['isExplicit']),
-                length=song_dict['duration'],
-                like_status=LikeStatuses[song_dict['likeStatus']],
+                length=song_dict.get('duration'),
+                like_status=LikeStatuses(song_dict['likeStatus']) if song_dict['likeStatus'] else None,
                 set_id=song_dict['setVideoId'],
                 feedback_tokens=FeedbackTokens(
                     add=song_dict.get('feedbackTokens', {}).get('add'),
