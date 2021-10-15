@@ -1,7 +1,9 @@
 from helpers.display.util import clear_output
 
+from PyInquirer import prompt
 
-def yes_or_no_prompt(prompt: str) -> bool:
+
+def yes_or_no_prompt(prompt_text: str) -> bool:
     """Prompts user for a (y/n) input
 
     Args:
@@ -10,12 +12,12 @@ def yes_or_no_prompt(prompt: str) -> bool:
     Returns:
         bool: True -> "y" | False -> "n"
     """
-    while True:
-        response = str(input(prompt + " (y/n): ")).lower().strip()
-        if response[:1] == "y":
-            return True
-        if response[:1] == "n":
-            return False
+    options = {
+        'type': 'confirm',
+        'message': prompt_text,
+        'name': prompt_text
+    }
+    return prompt(options).get(prompt_text)
 
 
 def continue_prompt(prompt: str = "", clear_screen: bool = False) -> None:
