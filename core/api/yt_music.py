@@ -68,7 +68,7 @@ class YoutubeMusicApiSingleton:
         return [Song(
             id=song_dict['videoId'],
             title=song_dict['title'],
-            artists=[artist['name'] for artist in song_dict['artist']],
+            artists=[artist['name'] for artist in song_dict['artists']],
             album=song_dict['album']['name'],
             length=song_dict['duration'],
             like_status=LikeStatuses[song_dict['likeStatus']]) for song_dict in self.__youtube_music_api.get_library_upload_songs(song_limit, order.value)]
@@ -110,7 +110,7 @@ class YoutubeMusicApiSingleton:
         """
 
         search_results = []
-        for result in self.__youtube_music_api.search(query, item_type.value, item_search_limit, ignore_spelling):
+        for result in self.__youtube_music_api.search(query=query, filter=item_type.value, limit=item_search_limit, ignore_spelling=ignore_spelling):
 
             if result['resultType'] == "song":
                 search_results.append(

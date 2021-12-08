@@ -12,8 +12,9 @@ SELECTION_MADE_TITLE = "You have selected:"
 
 ### Menu Options ###
 
-QUIT_OPTION = ", 'q' to quit"
-SKIP_OPTION = ", '0' to skip"
+ADD_SKIP_LIST_OPTION = "Add to Skip List"
+QUIT_OPTION = "Quit"
+SKIP_OPTION = "Skip"
 
 ### Menu Prompts ###
 
