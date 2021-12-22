@@ -13,7 +13,7 @@ class YoutubeMusicApiSingleton:
 
     def __init__(self):
         """ Constructor."""
-        self.__youtube_music_api = YTMusic("core/auth/headers_auth.json")
+        self.__youtube_music_api = YTMusic("configs/auth/headers_auth.json")
         if YoutubeMusicApiSingleton.__instance__ is None:
             YoutubeMusicApiSingleton.__instance__ = self
         else:
