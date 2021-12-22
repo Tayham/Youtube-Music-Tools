@@ -1,6 +1,7 @@
 from typing import Dict, List
 
 from core.constants.api import ItemType, LikeStatuses, Order
+from core.constants.paths import HEADERS_AUTH_FILE_PATH
 from helpers.data.feedback_tokens import FeedbackTokens
 from helpers.data.playlist import Playlist
 from helpers.data.song import Song
@@ -13,12 +14,12 @@ class YoutubeMusicApiSingleton:
 
     def __init__(self):
         """ Constructor."""
-        self.__youtube_music_api = YTMusic("configs/auth/headers_auth.json")
+        self.__youtube_music_api = YTMusic(HEADERS_AUTH_FILE_PATH)
         if YoutubeMusicApiSingleton.__instance__ is None:
             YoutubeMusicApiSingleton.__instance__ = self
         else:
             raise Exception(
-                "You cannot create another YoutubeMusicApi class, this class is a singleton"
+                "You cannot create another YoutubeMusicApiSingleton class, this class is a singleton"
             )
 
     @staticmethod
