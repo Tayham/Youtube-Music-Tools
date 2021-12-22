@@ -1,5 +1,6 @@
 ### Menu Choices ###
 
+REMOVE_RATED_SONGS_FROM_DEFAULT_PLAYLISTS_OPTION = "Remove the Rated (Like/Dislike) Songs from Playlists listed in Settings"
 REMOVE_RATED_SONGS_FROM_PLAYLIST_OPTION = "Remove the Rated (Like/Dislike) Songs from a Playlist"
 REPLACE_UPLOADED_SONGS_WITH_STREAMING_VERSIONS = "Replace Uploaded Songs with Streaming Versions"
 

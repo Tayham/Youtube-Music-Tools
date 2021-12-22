@@ -4,12 +4,13 @@ from PyInquirer import prompt
 
 from core.constants.menu import (
     ADD_SKIP_LIST_OPTION, MAIN_MENU_TITLE, MENU_CHOOSE_PROMPT, QUIT_OPTION,
-    REMOVE_RATED_SONGS_FROM_PLAYLIST_OPTION,
+    REMOVE_RATED_SONGS_FROM_DEFAULT_PLAYLISTS_OPTION, REMOVE_RATED_SONGS_FROM_PLAYLIST_OPTION,
     REPLACE_UPLOADED_SONGS_WITH_STREAMING_VERSIONS, SKIP_OPTION)
 
+
 def _get_list_menu_options(choices: List[dict], allow_quit: bool = False,
- allow_skip: bool = False, allow_add_to_skip_list: bool = False) -> List:
-    menu_options = [{'name':str(choice), 'value':choice, 'short':str(choice)} for choice in choices]
+                           allow_skip: bool = False, allow_add_to_skip_list: bool = False) -> List:
+    menu_options = [{'name': str(choice), 'value': choice, 'short': str(choice)} for choice in choices]
     if allow_add_to_skip_list:
         menu_options.append(ADD_SKIP_LIST_OPTION)
     if allow_skip:
@@ -29,13 +30,16 @@ def main_menu() -> str:
         'type': 'list',
         'name':  MAIN_MENU_TITLE,
         'message': MENU_CHOOSE_PROMPT,
-        'choices': _get_list_menu_options([REMOVE_RATED_SONGS_FROM_PLAYLIST_OPTION, REPLACE_UPLOADED_SONGS_WITH_STREAMING_VERSIONS], True, False, False),
+        'choices': _get_list_menu_options([REMOVE_RATED_SONGS_FROM_DEFAULT_PLAYLISTS_OPTION,
+                                           REMOVE_RATED_SONGS_FROM_PLAYLIST_OPTION,
+                                           REPLACE_UPLOADED_SONGS_WITH_STREAMING_VERSIONS], True, False, False),
     }
     return prompt(main_menu).get(MAIN_MENU_TITLE)
 
+
 def list_selection_menu(title: str, choices: List[dict],
-    prompt_text: str = MENU_CHOOSE_PROMPT, allow_quit: bool = False,
-    allow_skip: bool = False, allow_add_to_skip_list: bool = False) -> dict:
+                        prompt_text: str = MENU_CHOOSE_PROMPT, allow_quit: bool = False,
+                        allow_skip: bool = False, allow_add_to_skip_list: bool = False) -> dict:
     """Displays a menu that returns the index of the user selection.
 
     Args:
