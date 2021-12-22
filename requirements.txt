@@ -1,3 +1,2 @@
-ytmusicapi==0.19.2
-dataclasses==0.8
+ytmusicapi==0.19.5
 PyInquirer==1.0.3

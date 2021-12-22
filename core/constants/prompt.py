@@ -1,6 +1,7 @@
 ### Continue Prompts ###
 
 NEXT_SONG_PROMPT = "Moving to next song. "
+SEARCH_HISTORY_WARNING_PROMPT = "WARNING: If you do not want your YT Music search history spammed, please pause your YT Music account's search history now."
 
 ### Y/N Prompts ###
 

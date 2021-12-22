@@ -56,6 +56,19 @@ def get_library_playlists(playlist_limit: int = PLAYLIST_LIMIT) -> List[Playlist
     """
     return youtube_music_api.get_simple_library_playlists(playlist_limit)
 
+def get_matching_playlists_from_playlist_title_list(playlists: List[Playlist], playlist_titles_to_find: List[str]) -> List[Playlist]:
+    """Get list of playlists that match the given string playlist titles list.
+
+    Args:
+        playlists (List[Playlist]): List of Playlists that will be searched
+        playlist_titles_to_find (List[str]): List of playlist titles that will be used to search
+
+    Returns:
+        List[Playlist]: List of matching playlists
+    """
+    playlist_title_set = set(playlist_titles_to_find) # Needs to be on its own line, if in the loop then it is re-evaluated each loop iteration. 
+    return [playlist_item for playlist_item in playlists if playlist_item.title in playlist_title_set]
+
 
 def get_matching_songs_from_playlist(playlist: Playlist, filter_function: FilterFunction,
                                      playlist_song_limit: int = PLAYLIST_SONG_LIMIT) -> List[Song]:
@@ -67,7 +80,7 @@ def get_matching_songs_from_playlist(playlist: Playlist, filter_function: Filter
         playlist_song_limit (int, optional): Max amount of songs to retrieve from the playlist. Defaults to PLAYLIST_SONG_LIMIT.
 
     Returns:
-        List[Song]: List of songs
+        List[Song]: List of matching songs
     """
     complete_playlist = _ensure_complete_playlist(playlist, playlist_song_limit)
     filtered_playlist_songs = list(filter(filter_function.function, complete_playlist.songs))
