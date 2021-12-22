@@ -130,6 +130,7 @@ dmypy.json
 
 # Personal Youtube Music Files
 headers_auth.json
+settings.json
 
 # VSCode Settings
 .vscode/settings.json
