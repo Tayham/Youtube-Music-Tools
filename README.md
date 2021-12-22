@@ -1,2 +1,3 @@
 # Youtube-Music-Tools
-Toolset to help manage your Youtube Music Library
+
+Set of tools to help manage your Youtube Music Library
