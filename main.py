@@ -7,7 +7,7 @@ from core.constants.menu import (ADD_SKIP_LIST_OPTION, MENU_SONG_COMPARE_PROMPT,
 from core.constants.printout import (ADDING, FAILURE, LIBRARY, RETRY, SONG,
                                      STREAMING, UPLOADED)
 from core.constants.prompt import (ADD_STREAMING_AND_DELETE_UPLOADED_PROMPT,
-                                   NEXT_SONG_PROMPT, REMOVE_RATED_SONGS_PROMPT)
+                                   NEXT_SONG_PROMPT, REMOVE_RATED_SONGS_PROMPT, SEARCH_HISTORY_WARNING_PROMPT)
 from core.operations.playlist import (get_library_playlists,
                                       get_matching_songs_from_playlist,
                                       remove_songs_from_playlist)
@@ -35,6 +35,7 @@ def remove_rated_songs_from_playlist_selection() -> None:
 def replace_uploaded_songs_with_streaming_versions() -> None:
     """Replace uploaded library songs with the matching streaming version (if applicable)"""
     uploaded_songs = get_uploaded_songs()
+    continue_prompt(SEARCH_HISTORY_WARNING_PROMPT, clear_screen=True)
 
     for uploaded_song in uploaded_songs:
         search_result_songs = perform_song_search(uploaded_song)
