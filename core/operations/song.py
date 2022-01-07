@@ -19,7 +19,7 @@ def add_song_to_library(song: Song) -> bool:
     Returns:
         bool: True -> Song successfully added to library | False -> Song FAILED to be added to library
     """
-    print(ADDING + LIBRARY + SONG + song)
+    print(ADDING + LIBRARY + SONG + str(song))
     return youtube_music_api.add_song_to_library(song)
 
 
@@ -44,7 +44,7 @@ def delete_uploaded_song(song: Song) -> None:
     Args:
         song (Song): Uploaded song to delete
     """
-    print(DELETING + UPLOADED + SONG + song)
+    print(DELETING + UPLOADED + SONG + str(song))
     youtube_music_api.delete_library_uploaded_song(song)
 
 
