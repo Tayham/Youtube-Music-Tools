@@ -16,6 +16,7 @@ from core.operations.song import (add_song_to_library, delete_uploaded_song,
                                   get_uploaded_songs, perform_song_search)
 from core.settings.uploaded_song_streaming_skip_list_handler import UploadedSongStreamingSkipListHandler
 from core.settings.yt_music_tools_settings import YoutubeMusicToolsSettingsSingleton
+from helpers.data.song import Song
 from helpers.display.menus import list_selection_menu, main_menu
 from helpers.display.printouts import print_title_with_info
 from helpers.display.prompts import continue_prompt, yes_or_no_prompt
@@ -59,40 +60,43 @@ def replace_uploaded_songs_with_streaming_versions() -> None:
         for uploaded_song in get_uploaded_songs():
             if next(
                 (skip_song for skip_song in skip_list.get_uploaded_song_streaming_check_skip_list()
-                 if skip_song["id"] == uploaded_song.id),
-                    None) is None:
-                # if uploaded_song.id not in skip_list.get_uploaded_song_streaming_check_skip_list():
-                search_result_songs = perform_song_search(uploaded_song)
-                comparing_songs = True
-
-                while comparing_songs:
-                    print_title_with_info(UPLOADED + SONG, uploaded_song)
-                    selection = list_selection_menu(SEARCH_RESULT_TITLE, search_result_songs[0: 5],
-                                                    MENU_SONG_COMPARE_PROMPT, True, True, True).get(SEARCH_RESULT_TITLE)
-
-                    if(selection == SKIP_OPTION):  # If user wants to skip this song comparision
-                        break
-                    if(selection == ADD_SKIP_LIST_OPTION):
-                        skip_list.add_song_to_uploaded_song_streaming_check_skip_list(uploaded_song)
-                        break
-                    if(selection == QUIT_OPTION):
-                        sys.exit()
-                    else:
-                        print_title_with_info(UPLOADED + SONG, uploaded_song)
-                        print_title_with_info(STREAMING + SONG, selection)
-
-                        if yes_or_no_prompt(ADD_STREAMING_AND_DELETE_UPLOADED_PROMPT):
-                            # If streaming song is successfully added to library, delete uploaded song and move to comparing next song
-                            if(add_song_to_library(selection)):
-                                delete_uploaded_song(uploaded_song)
-                                comparing_songs = False
-                            # If streaming song is NOT added to library, do NOT delete uploaded song and retry
-                            else:
-                                print(FAILURE + ADDING + LIBRARY + SONG + selection + RETRY)
-            else:  # Song is in the skip list
+                 if skip_song['id'] == uploaded_song.entity_id),
+                    None) is None:  # If the uploaded song's entity id not in the skip list
+                __perform_song_comparision(skip_list, uploaded_song)
+            else:  # Uploaded song's entity id is in the skip list
                 print_title_with_info(SKIPPING + UPLOADED + SONG, uploaded_song)
 
     continue_prompt(NEXT_SONG_PROMPT, clear_screen=True)
+
+
+def __perform_song_comparision(skip_list: UploadedSongStreamingSkipListHandler, uploaded_song: Song) -> None:
+    """Compare uploaded library song with the streaming song search results"""
+    search_result_songs = perform_song_search(uploaded_song)
+    comparing_songs = True
+    while comparing_songs:
+        print_title_with_info(UPLOADED + SONG, uploaded_song)
+        selection = list_selection_menu(SEARCH_RESULT_TITLE, search_result_songs[0: 5],
+                                        MENU_SONG_COMPARE_PROMPT, True, True, True).get(SEARCH_RESULT_TITLE)
+
+        if(selection == SKIP_OPTION):  # If user wants to skip this song comparision
+            break
+        if(selection == ADD_SKIP_LIST_OPTION):
+            skip_list.add_song_to_uploaded_song_streaming_check_skip_list(uploaded_song)
+            break
+        if(selection == QUIT_OPTION):
+            sys.exit()
+        else:
+            print_title_with_info(UPLOADED + SONG, uploaded_song)
+            print_title_with_info(STREAMING + SONG, selection)
+
+            if yes_or_no_prompt(ADD_STREAMING_AND_DELETE_UPLOADED_PROMPT):
+                # If streaming song is successfully added to library, delete uploaded song and move to comparing next song
+                if(add_song_to_library(selection)):
+                    delete_uploaded_song(uploaded_song)
+                    comparing_songs = False
+                    # If streaming song is NOT added to library, do NOT delete uploaded song and retry
+                else:
+                    print(FAILURE + ADDING + LIBRARY + SONG + selection + RETRY)
 
 
 while True:

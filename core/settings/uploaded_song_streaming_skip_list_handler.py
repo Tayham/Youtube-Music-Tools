@@ -30,7 +30,7 @@ class UploadedSongStreamingSkipListHandler:
         Args:
             Song: Song to add to the list of uploaded songs that should be skipped when checking if they are available for streaming
         """
-        self.__uploaded_song_streaming_check_skip_list.append({"id": song.id})
+        self.__uploaded_song_streaming_check_skip_list.append({"id": song.entity_id})
 
     def get_uploaded_song_streaming_check_skip_list(self) -> List[Dict]:
         """Gets the list of uploaded song ids that should be skipped when checking if they are available for streaming

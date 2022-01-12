@@ -14,6 +14,7 @@ class Song:
     length: str = None
     like_status: LikeStatuses = None
     set_id: str = None  # Only used if song is in a playlist
+    entity_id: str = None # Only used if a song is an uploaded song
     feedback_tokens: FeedbackTokens = None
 
     def __str__(self):
