@@ -21,19 +21,21 @@ from helpers.display.menus import list_selection_menu, main_menu
 from helpers.display.printouts import print_title_with_info
 from helpers.display.prompts import continue_prompt, yes_or_no_prompt
 
-youtube_music_tools_settings = YoutubeMusicToolsSettingsSingleton.get_instance()
+yt_music_tools_settings = YoutubeMusicToolsSettingsSingleton.get_instance()
 
 
 def remove_rated_songs_from_default_playlists_selection() -> None:
     """Remove rated songs from all of the library playlist titles configured in the settings.json"""
     remove_rated_songs_playlists = get_matching_playlists_from_playlist_title_list(
-        get_library_playlists(), youtube_music_tools_settings.get_default_remove_rated_songs_playlist_titles())
+        get_library_playlists(), yt_music_tools_settings.get_default_remove_rated_songs_playlist_titles())
 
     for playlist_item in remove_rated_songs_playlists:
         print_title_with_info(PLAYLIST, playlist_item)
-        songs_to_remove = get_matching_songs_from_playlist(playlist_item, RATED_SONGS_FILTER)
+        songs_to_remove = get_matching_songs_from_playlist(
+            playlist_item, RATED_SONGS_FILTER, yt_music_tools_settings.get_playlist_song_limit())
         if songs_to_remove:  # If songs_to_remove is NOT empty
-            remove_songs_from_playlist(playlist_item, songs_to_remove)
+            remove_songs_from_playlist(playlist_item, songs_to_remove,
+                                       yt_music_tools_settings.get_playlist_song_limit())
 
     continue_prompt()
 
@@ -41,14 +43,16 @@ def remove_rated_songs_from_default_playlists_selection() -> None:
 def remove_rated_songs_from_playlist_selection() -> None:
     """Remove rated songs from one of the current user's library playlists"""
     selected_playlist = list_selection_menu(
-        PLAYLIST_CHOICE_TITLE, get_library_playlists(),
+        PLAYLIST_CHOICE_TITLE, get_library_playlists(yt_music_tools_settings.get_playlist_limit()),
         allow_quit=True).get(PLAYLIST_CHOICE_TITLE)
 
     print_title_with_info(SELECTION_MADE_TITLE, selected_playlist)
-    songs_to_remove = get_matching_songs_from_playlist(selected_playlist, RATED_SONGS_FILTER)
+    songs_to_remove = get_matching_songs_from_playlist(
+        selected_playlist, RATED_SONGS_FILTER, yt_music_tools_settings.get_playlist_song_limit())
     if songs_to_remove:  # If songs_to_remove is NOT empty
         if yes_or_no_prompt(REMOVE_RATED_SONGS_PROMPT):
-            remove_songs_from_playlist(selected_playlist, songs_to_remove)
+            remove_songs_from_playlist(selected_playlist, songs_to_remove,
+                                       yt_music_tools_settings.get_playlist_song_limit())
 
     continue_prompt()
 
@@ -57,7 +61,7 @@ def replace_uploaded_songs_with_streaming_versions() -> None:
     """Replace uploaded library songs with the matching streaming version (if applicable)"""
     continue_prompt(SEARCH_HISTORY_WARNING_PROMPT, clear_screen=True)
     with UploadedSongStreamingSkipListHandler() as skip_list:
-        for uploaded_song in get_uploaded_songs():
+        for uploaded_song in get_uploaded_songs(yt_music_tools_settings.get_uploaded_song_limit()):
             if next(
                 (skip_song for skip_song in skip_list.get_uploaded_song_streaming_check_skip_list()
                  if skip_song['id'] == uploaded_song.entity_id),
@@ -71,12 +75,14 @@ def replace_uploaded_songs_with_streaming_versions() -> None:
 
 def __perform_song_comparision(skip_list: UploadedSongStreamingSkipListHandler, uploaded_song: Song) -> None:
     """Compare uploaded library song with the streaming song search results"""
-    search_result_songs = perform_song_search(uploaded_song)
+    search_result_songs = perform_song_search(uploaded_song, yt_music_tools_settings.get_song_search_result_limit())
     comparing_songs = True
     while comparing_songs:
         print_title_with_info(UPLOADED + SONG, uploaded_song)
-        selection = list_selection_menu(SEARCH_RESULT_TITLE, search_result_songs[0: 5],
-                                        MENU_SONG_COMPARE_PROMPT, True, True, True).get(SEARCH_RESULT_TITLE)
+        selection = list_selection_menu(
+            # Need to slice list because more songs than the limit could be returned
+            SEARCH_RESULT_TITLE, search_result_songs[:yt_music_tools_settings.get_song_search_result_limit()],
+            MENU_SONG_COMPARE_PROMPT, True, True, True).get(SEARCH_RESULT_TITLE)
 
         if(selection == SKIP_OPTION):  # If user wants to skip this song comparision
             break

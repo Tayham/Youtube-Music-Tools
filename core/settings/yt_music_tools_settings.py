@@ -35,3 +35,35 @@ class YoutubeMusicToolsSettingsSingleton:
             List[str]: List of configured library playlist titles to remove rated songs from
         """
         return self.__youtube_music_tools_settings["defaultRemoveRatedSongsPlaylists"]
+
+    def get_playlist_limit(self) -> int:
+        """Gets the limit of playlists to retrieve via API
+
+        Returns:
+            int: The limit of playlists to retrieve via API
+        """
+        return self.__youtube_music_tools_settings["playlistLimit"]
+
+    def get_playlist_song_limit(self) -> int:
+        """Gets the limit of songs in a playlist to retrieve via API
+
+        Returns:
+            int: The limit of songs in a playlist to retrieve via API
+        """
+        return self.__youtube_music_tools_settings["playlistSongLimit"]
+
+    def get_song_search_result_limit(self) -> int:
+        """Gets the limit of search result songs to retrieve via API
+
+        Returns:
+            int: The limit of search result songs to retrieve via API
+        """
+        return self.__youtube_music_tools_settings["songSearchResultLimit"]
+
+    def get_uploaded_song_limit(self) -> int:
+        """Gets the limit of uploaded songs to retrieve via API
+
+        Returns:
+            int: The limit of uploaded songs to retrieve via API
+        """
+        return self.__youtube_music_tools_settings["uploadedSongLimit"]

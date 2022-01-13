@@ -1,8 +1,7 @@
 from typing import List
 
 from core.api.yt_music import YoutubeMusicApiSingleton
-from core.constants.api import (SEARCH_SONG_LIMIT, UPLOAD_SONG_LIMIT, ItemType,
-                                Order)
+from core.constants.api import (ItemType, Order)
 from core.constants.printout import (ADDING, DELETING, FOUND, LIBRARY,
                                      SEARCHING, SONG, UPLOADED)
 from helpers.data.song import Song
@@ -23,11 +22,11 @@ def add_song_to_library(song: Song) -> bool:
     return youtube_music_api.add_song_to_library(song)
 
 
-def get_uploaded_songs(song_limit: int = UPLOAD_SONG_LIMIT, order: Order = Order.DSC) -> List[Song]:
+def get_uploaded_songs(song_limit: int, order: Order = Order.DSC) -> List[Song]:
     """Get a list of current user's uploaded library songs
 
     Args:
-        song_limit (int, optional): Max amount of songs to retrieve. Defaults to UPLOAD_SONG_LIMIT.
+        song_limit (int): Max amount of songs to retrieve.
         order (Order, optional): Order to retrieve the songs in. Defaults to Order.DSC.
 
     Returns:
@@ -49,12 +48,12 @@ def delete_uploaded_song(song: Song) -> None:
 
 
 def perform_song_search(
-        song: Song, song_search_limit: int = SEARCH_SONG_LIMIT, ignore_spelling: bool = True) -> List[Song]:
+        song: Song, song_search_limit: int, ignore_spelling: bool = True) -> List[Song]:
     """Perform a song search and return a list of song results
 
     Args:
         song (Song): Song to search for
-        song_search_limit (int, optional): Max amount of songs in the search results. Defaults to SEARCH_SONG_LIMIT.
+        song_search_limit (int): Max amount of songs in the search results.
         ignore_spelling (bool, optional): True -> Ignore spelling suggestions | False -> Use autocorrected text. Defaults to True.
 
     Returns:

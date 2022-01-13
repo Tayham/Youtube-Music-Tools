@@ -1,3 +1,7 @@
 {
-    "defaultRemoveRatedSongsPlaylists": []
+    "defaultRemoveRatedSongsPlaylists": [],
+    "playlistLimit": 50,
+    "playlistSongLimit": 2000,
+    "songSearchResultLimit": 5,
+    "uploadedSongLimit": 100
 }
