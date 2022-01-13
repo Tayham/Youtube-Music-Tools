@@ -4,6 +4,7 @@ ADDING = "Adding "
 DELETING = "Deleting "
 REMOVING = "Removing "
 SEARCHING = "Searching for "
+SKIPPING = "Skipping "
 
 ### Print Out Results ###
 

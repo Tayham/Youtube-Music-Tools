@@ -54,7 +54,7 @@ class YoutubeMusicApiSingleton:
         Args:
             uploaded_song_to_delete (Song): Uploaded song to delete
         """
-        self.__youtube_music_api.delete_upload_entity(uploaded_song_to_delete.id)
+        self.__youtube_music_api.delete_upload_entity(uploaded_song_to_delete.entity_id)
 
     def get_library_uploaded_songs(self, song_limit: int, order: Order) -> List[Song]:
         """Get a list of uploaded songs from the current user's Youtube Music Library
@@ -72,7 +72,8 @@ class YoutubeMusicApiSingleton:
             artists=[artist['name'] for artist in song_dict['artists']],
             album=song_dict['album']['name'],
             length=song_dict['duration'],
-            like_status=LikeStatuses[song_dict['likeStatus']]) for song_dict in self.__youtube_music_api.get_library_upload_songs(song_limit, order.value)]
+            like_status=LikeStatuses[song_dict['likeStatus']],
+            entity_id=song_dict['entityId']) for song_dict in self.__youtube_music_api.get_library_upload_songs(song_limit, order.value)]
 
     def get_simple_library_playlists(self, playlist_limit: int) -> List[Playlist]:
         """Get a list of simple (no song info included) playlist information from the current user's Youtube Music library

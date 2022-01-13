@@ -1,12 +1,5 @@
 from enum import Enum
 
-### API Query Limits ###
-
-PLAYLIST_SONG_LIMIT = 2000
-PLAYLIST_LIMIT = 50
-UPLOAD_SONG_LIMIT = 25
-SEARCH_SONG_LIMIT = 20
-
 ### Enums ###
 
 

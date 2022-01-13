@@ -1,8 +1,7 @@
 from typing import List
 
 from core.api.yt_music import YoutubeMusicApiSingleton
-from core.constants.api import (PLAYLIST_LIMIT, PLAYLIST_SONG_LIMIT,
-                                FilterFunction)
+from core.constants.api import FilterFunction
 from core.constants.printout import FOUND
 from helpers.data.playlist import Playlist
 from helpers.data.song import Song
@@ -10,13 +9,12 @@ from helpers.data.song import Song
 youtube_music_api = YoutubeMusicApiSingleton.get_instance()
 
 
-def _ensure_complete_playlist(playlist: Playlist, playlist_song_limit: int = PLAYLIST_SONG_LIMIT) -> Playlist:
+def _ensure_complete_playlist(playlist: Playlist, playlist_song_limit: int) -> Playlist:
     """Ensure that the playlist is complete (contains item information), if not the complete playlist will be retrieved
 
     Args:
         playlist (Playlist): Playlist to check / get complete information for
         playlist_song_limit (int): Max amount of songs to retrieve from the playlist (this is only used if the provided playlist is not complete). 
-        Defaults to PLAYLIST_SONG_LIMIT.
 
     Returns:
         Playlist: Complete playlist
@@ -27,14 +25,13 @@ def _ensure_complete_playlist(playlist: Playlist, playlist_song_limit: int = PLA
         return playlist
 
 
-def get_playlist_by_title(playlist_title: str, playlist_limit: int = PLAYLIST_LIMIT,
-                          playlist_song_limit: int = PLAYLIST_SONG_LIMIT) -> Playlist:
+def get_playlist_by_title(playlist_title: str, playlist_limit: int, playlist_song_limit: int) -> Playlist:
     """Get a playlist from the user's library that matches the title given
 
     Args:
         playlist_title (str): Title of playlist
-        playlist_limit (int, optional): Max amount of playlists to retrieve. Defaults to PLAYLIST_LIMIT.
-        playlist_song_limit (int, optional): Max amount of songs to retrieve from the playlist. Defaults to PLAYLIST_SONG_LIMIT.
+        playlist_limit (int): Max amount of playlists to retrieve.
+        playlist_song_limit (int): Max amount of songs to retrieve from the playlist.
 
     Returns:
         Dict: Complete playlist
@@ -45,11 +42,11 @@ def get_playlist_by_title(playlist_title: str, playlist_limit: int = PLAYLIST_LI
     return youtube_music_api.get_complete_playlist(matching_library_playlist, playlist_song_limit)
 
 
-def get_library_playlists(playlist_limit: int = PLAYLIST_LIMIT) -> List[Playlist]:
+def get_library_playlists(playlist_limit: int) -> List[Playlist]:
     """Get all playlists in the user's library
 
     Args:
-        playlist_limit (int, optional): Max amount of playlists to retrieve. Defaults to PLAYLIST_LIMIT.
+        playlist_limit (int): Max amount of playlists to retrieve.
 
     Returns:
         List[Dict]: List of simple library playlist information
@@ -71,13 +68,13 @@ def get_matching_playlists_from_playlist_title_list(playlists: List[Playlist], p
 
 
 def get_matching_songs_from_playlist(playlist: Playlist, filter_function: FilterFunction,
-                                     playlist_song_limit: int = PLAYLIST_SONG_LIMIT) -> List[Song]:
+                                     playlist_song_limit: int) -> List[Song]:
     """Get list of songs from a playlist that match the given filter
 
     Args:
         playlist (Playlist): Playlist to get songs from
         filter_function (FilterFunction): Defines how the songs should be filtered
-        playlist_song_limit (int, optional): Max amount of songs to retrieve from the playlist. Defaults to PLAYLIST_SONG_LIMIT.
+        playlist_song_limit (int): Max amount of songs to retrieve from the playlist.
 
     Returns:
         List[Song]: List of matching songs
@@ -89,11 +86,13 @@ def get_matching_songs_from_playlist(playlist: Playlist, filter_function: Filter
     return filtered_playlist_songs
 
 
-def remove_songs_from_playlist(playlist: Playlist, songs_to_remove: List[Song]) -> None:
+def remove_songs_from_playlist(playlist: Playlist, songs_to_remove: List[Song], 
+                               playlist_song_limit: int) -> None:
     """Remove songs from a playlist
 
     Args:
         playlist (Playlist): Playlist to remove songs from
         songs_to_remove (List[Song]): List of songs to remove
+        playlist_song_limit (int): Max amount of songs to retrieve from the playlist.
     """
-    youtube_music_api.remove_songs_from_playlist(_ensure_complete_playlist(playlist), songs_to_remove)
+    youtube_music_api.remove_songs_from_playlist(_ensure_complete_playlist(playlist, playlist_song_limit), songs_to_remove)
