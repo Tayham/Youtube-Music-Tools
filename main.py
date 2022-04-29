@@ -27,7 +27,7 @@ yt_music_tools_settings = YoutubeMusicToolsSettingsSingleton.get_instance()
 def remove_rated_songs_from_default_playlists_selection() -> None:
     """Remove rated songs from all of the library playlist titles configured in the settings.json"""
     remove_rated_songs_playlists = get_matching_playlists_from_playlist_title_list(
-        get_library_playlists(), yt_music_tools_settings.get_default_remove_rated_songs_playlist_titles())
+        get_library_playlists(yt_music_tools_settings.get_playlist_limit()), yt_music_tools_settings.get_default_remove_rated_songs_playlist_titles())
 
     for playlist_item in remove_rated_songs_playlists:
         print_title_with_info(PLAYLIST, playlist_item)
