@@ -1,6 +1,6 @@
 from typing import List
 
-from PyInquirer import prompt
+from InquirerPy import prompt
 
 from core.constants.menu import (
     ADD_SKIP_LIST_OPTION, MAIN_MENU_TITLE, MENU_CHOOSE_PROMPT, QUIT_OPTION,

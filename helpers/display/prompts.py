@@ -1,6 +1,6 @@
 from helpers.display.util import clear_output
 
-from PyInquirer import prompt
+from InquirerPy import prompt
 
 
 def yes_or_no_prompt(prompt_text: str) -> bool:

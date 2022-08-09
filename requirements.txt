@@ -1,2 +1,2 @@
 ytmusicapi==0.20.0
-PyInquirer==1.0.3
+inquirerpy==0.3.4
