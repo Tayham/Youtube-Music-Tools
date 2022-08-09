@@ -1,2 +1,2 @@
-ytmusicapi==0.20.0
+ytmusicapi==0.22.0
 inquirerpy==0.3.4
