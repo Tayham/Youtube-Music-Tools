@@ -131,6 +131,7 @@ dmypy.json
 # Personal Youtube Music Files
 headers_auth.json
 settings.json
+uploadedSongCheckSkipList.json
 
 # VSCode Settings
 .vscode/settings.json
