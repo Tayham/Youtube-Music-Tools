@@ -17,7 +17,7 @@ from core.operations.song import (add_song_to_library, delete_uploaded_song,
 from core.settings.uploaded_song_streaming_skip_list_handler import UploadedSongStreamingSkipListHandler
 from core.settings.yt_music_tools_settings import YoutubeMusicToolsSettingsSingleton
 from helpers.data.song import Song
-from helpers.display.menus import list_selection_menu, main_menu
+from helpers.display.menus import list_comparison_selection_menu, list_selection_menu, main_menu
 from helpers.display.printouts import print_title_with_info
 from helpers.display.prompts import continue_prompt, yes_or_no_prompt
 
@@ -43,8 +43,10 @@ def remove_rated_songs_from_default_playlists_selection() -> None:
 def remove_rated_songs_from_playlist_selection() -> None:
     """Remove rated songs from one of the current user's library playlists"""
     selected_playlist = list_selection_menu(
-        PLAYLIST_CHOICE_TITLE, get_library_playlists(yt_music_tools_settings.get_playlist_limit()),
-        allow_quit=True).get(PLAYLIST_CHOICE_TITLE)
+        PLAYLIST_CHOICE_TITLE, get_library_playlists(yt_music_tools_settings.get_playlist_limit())).get(PLAYLIST_CHOICE_TITLE)
+
+    if(selected_playlist == QUIT_OPTION):
+        sys.exit()
 
     print_title_with_info(SELECTION_MADE_TITLE, selected_playlist)
     songs_to_remove = get_matching_songs_from_playlist(
@@ -79,10 +81,10 @@ def __perform_song_comparision(skip_list: UploadedSongStreamingSkipListHandler, 
     comparing_songs = True
     while comparing_songs:
         print_title_with_info(UPLOADED + SONG, uploaded_song)
-        selection = list_selection_menu(
+        selection = list_comparison_selection_menu(
             # Need to slice list because more songs than the limit could be returned
             SEARCH_RESULT_TITLE, search_result_songs[:yt_music_tools_settings.get_song_search_result_limit()],
-            MENU_SONG_COMPARE_PROMPT, True, True, True).get(SEARCH_RESULT_TITLE)
+            MENU_SONG_COMPARE_PROMPT).get(SEARCH_RESULT_TITLE)
 
         if(selection == SKIP_OPTION):  # If user wants to skip this song comparision
             break

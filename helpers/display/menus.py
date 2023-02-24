@@ -37,27 +37,42 @@ def main_menu() -> str:
     return prompt(main_menu).get(MAIN_MENU_TITLE)
 
 
-def list_selection_menu(title: str, choices: List[dict],
-                        prompt_text: str = MENU_CHOOSE_PROMPT, allow_quit: bool = False,
-                        allow_skip: bool = False, allow_add_to_skip_list: bool = False) -> dict:
-    """Displays a menu that returns the index of the user selection.
+def list_selection_menu(title: str, choices: List[dict], prompt_text: str = MENU_CHOOSE_PROMPT) -> dict:
+    """Displays a menu with quit option. Returns the index of the user selection.
 
     Args:
         title (str): Menu title text
         choices (List[dict]): Choices to display to the user
-        prompt (str, optional): Optional user prompt text. Defaults to MENU_CHOOSE.
-        allow_quit (bool, optional): Set to True to add a "Quit" option. Defaults to False.
-        allow_skip (bool, optional): Set to True to add a "Skip" option. Defaults to False.
-        allow_add_to_skip_list (bool, optional): Set to True to add a "Add to Skip List" option. Defaults to False.
+        prompt (str, optional): Optional user prompt text. Defaults to MENU_CHOOSE_PROMPT.
 
     Returns:
-        int: List index of the user selection
+        dict: kv dict with key=title and value=selection dict
     """
 
     list_menu = {
         'type': 'list',
         'name':  title,
         'message': prompt_text,
-        'choices': _get_list_menu_options(choices, allow_quit, allow_skip, allow_add_to_skip_list),
+        'choices': _get_list_menu_options(choices, True, False, False),
+    }
+    return prompt(list_menu)
+
+def list_comparison_selection_menu(title: str, choices: List[dict], prompt_text: str = MENU_CHOOSE_PROMPT) -> dict:
+    """Displays a comparision menu with skip, add to skip list, and quit options. Returns the index of the user selection.
+
+    Args:
+        title (str): Menu title text
+        choices (List[dict]): Choices to display to the user
+        prompt (str, optional): Optional user prompt text. Defaults to MENU_CHOOSE_PROMPT.
+
+    Returns:
+        dict: kv dict with key=title and value=selection dict
+    """
+
+    list_menu = {
+        'type': 'list',
+        'name':  title,
+        'message': prompt_text,
+        'choices': _get_list_menu_options(choices, True, True, True),
     }
     return prompt(list_menu)
