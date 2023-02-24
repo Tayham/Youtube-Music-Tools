@@ -162,7 +162,7 @@ class YoutubeMusicApiSingleton:
                 set_id=song_dict['setVideoId'],
                 feedback_tokens=FeedbackTokens(
                     add=song_dict.get('feedbackTokens', {}).get('add'),
-                    remove=song_dict.get('feedbackTokens', {}).get('remove'))) for song_dict in response['tracks']])
+                    remove=song_dict.get('feedbackTokens', {}).get('remove'))) for song_dict in response.get('tracks', [])])
 
     def remove_songs_from_playlist(self, playlist: Playlist, songs: List[Song]) -> None:
         """Remove songs from a playlist in Youtube Music
